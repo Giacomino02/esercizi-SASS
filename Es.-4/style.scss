@@ -1,0 +1,33 @@
+@import 'var', 'fun';
+
+div {
+    border: convert(1px) solid $red;
+    padding: 1rem;
+    text-align: center;
+    h1 {
+        color: $green;
+        text-decoration: underline $blue convert(2px);
+    }
+    section {
+        display: flex;
+        justify-content: center;
+        article {
+            width: 100%;
+            border: convert(1px) solid $green;
+            padding: 1rem;
+            &:nth-child(even) {
+                @include article($red, $green, $font-size)
+            }
+            &:nth-child(odd) {
+                @include article($blue, $green, $font-size)
+            }
+        }
+        &:nth-child(3) {
+            margin-top: 1rem;
+            article {
+                @include article($green, $blue, convert(24px))
+            }
+        }
+    }
+    
+}
