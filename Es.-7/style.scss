@@ -1,0 +1,40 @@
+@function random-hex(){
+    $rgb: '';
+    $i: 6;
+    @while $i > 0 {
+        $number: random(16);
+        $letters: a,b,c,d,e,f;
+        @if $number > 9 {
+            $number: nth($letters, random(6));
+        } 
+        $rgb: str-insert($rgb, ''+$number, 0);
+        $i: $i - 1;
+    }
+    @return unquote('#'+$rgb);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-15px);}
+}
+
+%bg-random {
+    background-color: random-hex();
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.bounce {
+    margin-top: 150px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    animation-duration: 1s;
+    animation-name: bounce;
+    @extend %bg-random;
+}
+
