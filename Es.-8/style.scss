@@ -1,0 +1,100 @@
+$red: red;
+$blue: blue;
+$green: green;
+$font-size: 1rem;
+
+@function convert($px){
+    @return ($px/16px) * 1rem;
+}
+
+@mixin article($color, $border-color, $font-size) {
+    color: $color;
+    border: convert(1px) solid $border-color;
+    font-size: $font-size;
+}
+
+%text {
+    color: $green;
+    text-decoration: underline $blue convert(2px);
+}
+
+div {
+    border: convert(1px) solid $red;
+    padding: 1rem;
+    text-align: center;
+    
+    h1 {
+        @extend %text;
+    }
+    h2 {
+        padding: 1rem;
+        border: convert(1px) solid red;
+        @extend %text;
+    }
+    section {
+        display: flex;
+        justify-content: center;
+        article {
+            width: 100%;
+            border: convert(1px) solid $green;
+            padding: 1rem;
+            &:nth-child(even) {
+                @include article($red, $green, $font-size)
+            }
+            &:nth-child(odd) {
+                @include article($blue, $green, $font-size)
+            }
+        }
+        &:nth-child(4) {
+            justify-content: space-around;
+            div {
+                text-align: start;
+                margin: 1rem;
+                padding: 0;
+                width: convert(45px);
+                height: convert(45px);
+                &:nth-child(1) {
+                    margin-left: 0;
+                }
+                &:nth-child(19) {
+                    margin-right: 0;
+                }
+
+                $number: 0;
+                
+                @for $i from 1 through 19 {
+                    $number: $number +5;
+                    
+                    @if $i ==10 {
+                        &:nth-child(#{$i}) {
+                            background-color: blue;
+                            color: red;
+                        }
+                    }
+                    
+                    @else {
+                        &:nth-child(#{$i}){
+                            background-color: darken($color: white, $amount: $number);
+                            color: lighten($color: #000000, $amount: $number);
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        &:nth-child(5) {
+            article {
+                @include article($green, $blue, convert(24px))
+            }
+        }
+    }
+    
+}
+$sizes: 1rem, 2rem, 3rem;
+
+@each $size in $sizes {
+    .fs-#{$size} {
+        font-size: $size;
+    }
+}
