@@ -1,0 +1,56 @@
+$red: red;
+$blue: blue;
+$green: green;
+$font-size: 1rem;
+
+@function convert($px){
+    @return ($px / 16px) * 1rem;
+}
+
+@mixin article($color, $border-color, $font-size) {
+    color: $color;
+    border: convert(1px) solid $border-color;
+    font-size: $font-size;
+}
+
+%text {
+    color: $green;
+    text-decoration: underline $blue convert(2px);
+}
+
+div {
+    border: convert(1px) solid $red;
+    padding: 1rem;
+    text-align: center;
+    
+    h1 {
+        @extend %text;
+    }
+    h2 {
+        padding: 1rem;
+        border: convert(1px) solid red;
+        @extend %text;
+    }
+    section {
+        display: flex;
+        justify-content: center;
+        article {
+            width: 100%;
+            border: convert(1px) solid $green;
+            padding: 1rem;
+            &:nth-child(even) {
+                @include article($red, $green, $font-size)
+            }
+            &:nth-child(odd) {
+                @include article($blue, $green, $font-size)
+            }
+        }
+        &:nth-child(even) {
+            margin-top: 1rem;
+            article {
+                @include article($green, $blue, convert(24px))
+            }
+        }
+    }
+    
+}
